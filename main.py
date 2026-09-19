@@ -53,7 +53,7 @@ class Bullet(pygame.sprite.Sprite):
     def update(self, dt):
         self.rect.y -= BULLET_SPEED * dt
 
-        if self.rect.y > HEIGHT:
+        if self.rect.y < 0:
             self.kill()
 
 

@@ -26,7 +26,7 @@ while running:
 
     keys = pygame.key.get_pressed() # 返回一个类似布尔序列的对象(ScancodeWrapper)，用 pygame.K_* 索引
 
-    if keys[pygame.K_UP]:
+    if keys[pygame.K_UP]: # 同时按着多个按键的时候好像有一些bug，待修...
         player_rect.y -= PLAYER_SPEED // FPS
     if keys[pygame.K_DOWN]:
         player_rect.y += PLAYER_SPEED // FPS
@@ -34,6 +34,15 @@ while running:
         player_rect.x -= PLAYER_SPEED // FPS
     if keys[pygame.K_RIGHT]:
         player_rect.x += PLAYER_SPEED // FPS
+
+    if player_rect.top < 0:
+        player_rect.top = 0
+    if player_rect.bottom > HEIGHT:
+        player_rect.bottom = HEIGHT
+    if player_rect.left < 0:
+        player_rect.left = 0
+    if player_rect.right > WIDTH:
+        player_rect.right = WIDTH
 
     screen.fill(BG_COLOR) # 背景色清屏
     pygame.draw.rect(screen, PLAYER_COLOR, player_rect)

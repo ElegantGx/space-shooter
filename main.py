@@ -5,6 +5,9 @@ pygame.init() # 初始化pygame
 
 WEIGHT, HEIGHT = 800, 600
 BG_COLOR = (10, 10, 30)
+FPS = 60
+
+clock = pygame.time.Clock() # 创建一个Clock实例
 
 screen = pygame.display.set_mode((WEIGHT, HEIGHT)) # 返回一个pygame.surface.Surface对象，副作用是创建窗口
 
@@ -15,8 +18,10 @@ while running:
         if event.type == pygame.QUIT: # pygame.event.Event对象都具有一个type属性，表示事件类型
             running =False
 
-    screen.fill(BG_COLOR)
-    pygame.display.flip()
+    screen.fill(BG_COLOR) # 背景色清屏
+    pygame.display.flip() # 刷新屏幕
+
+    clock.tick(FPS)
 
 
 pygame.quit() # 显式去初始化pygame

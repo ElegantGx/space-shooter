@@ -30,13 +30,13 @@ while running:
     dx = 0
     dy = 0
 
-    if keys[pygame.K_UP]:
+    if keys[pygame.K_w] or keys[pygame.K_UP]:
         dy -= 1
-    if keys[pygame.K_DOWN]:
+    if keys[pygame.K_s] or keys[pygame.K_DOWN]:
         dy += 1
-    if keys[pygame.K_LEFT]:
+    if keys[pygame.K_a] or keys[pygame.K_LEFT]:
         dx -= 1
-    if keys[pygame.K_RIGHT]:
+    if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
         dx += 1
 
     if dx != 0 and dy != 0:

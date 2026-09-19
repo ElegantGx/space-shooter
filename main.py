@@ -9,6 +9,8 @@ FPS = 60
 
 clock = pygame.time.Clock() # 创建一个Clock实例
 
+pygame.display.set_caption("Space Shooter")
+
 screen = pygame.display.set_mode((WEIGHT, HEIGHT)) # 返回一个pygame.surface.Surface对象，副作用是创建窗口
 
 running = True

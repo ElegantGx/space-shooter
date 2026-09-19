@@ -3,7 +3,7 @@ import pygame
 
 pygame.init() # 初始化pygame
 
-WEIGHT, HEIGHT = 800, 600
+WIDTH, HEIGHT = 800, 600
 BG_COLOR = (10, 10, 30)
 FPS = 60
 PLAYER_SIZE = 60
@@ -11,11 +11,11 @@ PLAYER_COLOR = (100, 200, 255)
 PLAYER_SPEED = 400
 
 clock = pygame.time.Clock() # 创建一个Clock实例
-player_rect = pygame.rect.Rect((WEIGHT - PLAYER_SIZE) // 2, HEIGHT - 80, PLAYER_SIZE, PLAYER_SIZE)
+player_rect = pygame.rect.Rect((WIDTH - PLAYER_SIZE) // 2, HEIGHT - 80, PLAYER_SIZE, PLAYER_SIZE)
 
 pygame.display.set_caption("Space Shooter")
 
-screen = pygame.display.set_mode((WEIGHT, HEIGHT)) # 返回一个pygame.surface.Surface对象，副作用是创建窗口
+screen = pygame.display.set_mode((WIDTH, HEIGHT)) # 返回一个pygame.surface.Surface对象，副作用是创建窗口
 
 running = True
 while running:

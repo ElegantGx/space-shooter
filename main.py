@@ -9,7 +9,9 @@ screen = pygame.display.set_mode((WEIGHT, HEIGHT)) # 返回一个pygame.surface.
 
 running = True
 while running:
-    pass
+    for event in pygame.event.get(): # 返回一个元素的类型是pygame.event.Event的list
+        if event.type == pygame.QUIT: # pygame.event.Event对象都具有一个type属性，表示事件类型
+            running =False
 
 
 

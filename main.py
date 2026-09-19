@@ -6,8 +6,11 @@ pygame.init() # 初始化pygame
 WEIGHT, HEIGHT = 800, 600
 BG_COLOR = (10, 10, 30)
 FPS = 60
+PLAYER_SIZE = 60
+PLAYER_COLOR = (100, 200, 255)
 
 clock = pygame.time.Clock() # 创建一个Clock实例
+player_rect = pygame.rect.Rect((WEIGHT - PLAYER_SIZE) // 2, HEIGHT - 80, PLAYER_SIZE, PLAYER_SIZE)
 
 pygame.display.set_caption("Space Shooter")
 
@@ -21,6 +24,7 @@ while running:
             running =False
 
     screen.fill(BG_COLOR) # 背景色清屏
+    pygame.draw.rect(screen, PLAYER_COLOR, player_rect)
     pygame.display.flip() # 刷新屏幕
 
     clock.tick(FPS)

@@ -21,6 +21,8 @@ SPAWN_INTERVAL = 0.5
 
 clock = pygame.time.Clock() # 创建一个Clock实例
 
+
+# 定义核心类
 class Player(pygame.sprite.Sprite):
     image: pygame.Surface
     rect: pygame.Rect
@@ -95,11 +97,15 @@ class Enemy(pygame.sprite.Sprite):
                 self.rect.left > WIDTH or self.rect.right < 0):
             self.kill()
 
-player = Player()
-player_hit = pygame.sprite.Group(player)
+# 初始化对象
+players = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
-all_sprites = pygame.sprite.Group(player)
+all_sprites = pygame.sprite.Group()
+
+player = Player()
+players.add(player)
+all_sprites.add(player)
 
 pygame.display.set_caption("Space Shooter")
 
@@ -117,6 +123,7 @@ while running:
     dt = clock.tick(FPS) / 1000.0
     keys = pygame.key.get_pressed() # 返回一个类似布尔序列的对象(ScancodeWrapper)，用 pygame.K_* 索引
 
+    # 生成敌人
     spawn_timer += dt
     if spawn_timer >= SPAWN_INTERVAL:
         spawn_timer = 0.0
@@ -124,6 +131,7 @@ while running:
         enemies.add(new_enemy)
         all_sprites.add(new_enemy)
 
+    # 更新对象
     player.update(keys, dt)
     bullets.update(dt)
     enemies.update(player.rect.centerx, player.rect.centery, dt)
@@ -133,9 +141,11 @@ while running:
         bullets.add(new_bullet)
         all_sprites.add(new_bullet)
 
+    # 子弹消除敌人
     pygame.sprite.groupcollide(bullets, enemies, True, True)
 
-    if pygame.sprite.groupcollide(player_hit, enemies, True,False):
+    # 敌人消灭玩家
+    if pygame.sprite.groupcollide(players, enemies, True,False):
         running = False
 
     screen.fill(BG_COLOR) # 背景色清屏

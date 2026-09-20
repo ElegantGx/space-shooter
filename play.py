@@ -122,19 +122,17 @@ def play_main(screen):
         PlayState.PLAY_LOOP: play_loop,
         PlayState.PLAY_PAUSE: play_pause,
         PlayState.PLAY_FINISH: play_finish,
-        PlayState.PLAY_QUIT: play_quit,
     }
 
-    while True:
+    while play_state != PlayState.PLAY_QUIT:
         play_handle = play_handlers.get(play_state, None)
 
         if play_handle is None:
             return None
 
-        if play_state is PlayState.PLAY_QUIT:
-            return State.MENU
-
         play_state = play_handle(play_session)
+
+    return State.MENU
 
 
 def play_loop(play_session):
@@ -182,8 +180,3 @@ def play_pause(play_session):
 
 def play_finish(play_session):
     return None
-
-# 根本不会运行play_quit的实际内容，但要保证参数统一
-def play_quit(play_session):
-    tmp = play_session
-    return tmp

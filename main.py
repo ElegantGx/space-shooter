@@ -132,7 +132,7 @@ while running:
         all_sprites.add(new_enemy)
 
     # 更新对象
-    player.update(keys, dt)
+    players.update(keys, dt)
     bullets.update(dt)
     enemies.update(player.rect.centerx, player.rect.centery, dt)
 
@@ -141,7 +141,7 @@ while running:
         bullets.add(new_bullet)
         all_sprites.add(new_bullet)
 
-    # 子弹消除敌人
+    # 子弹消灭敌人
     pygame.sprite.groupcollide(bullets, enemies, True, True)
 
     # 敌人消灭玩家

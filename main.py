@@ -22,6 +22,9 @@ SPAWN_INTERVAL = 0.5
 clock = pygame.time.Clock() # 创建一个Clock实例
 
 class Player(pygame.sprite.Sprite):
+    image: pygame.Surface
+    rect: pygame.Rect
+
     def __init__(self):
         super().__init__()
 
@@ -30,25 +33,28 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect(midbottom=(WIDTH // 2, HEIGHT - 20))
 
-    def update(self, keys,dt):
+    def update(self, pressed_keys, delta_time):
         dx = 0
         dy = 0
 
-        if keys[pygame.K_w] or keys[pygame.K_UP]:
+        if pressed_keys[pygame.K_w] or pressed_keys[pygame.K_UP]:
             dy -= 1
-        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+        if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]:
             dy += 1
-        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+        if pressed_keys[pygame.K_a] or pressed_keys[pygame.K_LEFT]:
             dx -= 1
-        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+        if pressed_keys[pygame.K_d] or pressed_keys[pygame.K_RIGHT]:
             dx += 1
 
-        self.rect.x += dx * PLAYER_SPEED * dt
-        self.rect.y += dy * PLAYER_SPEED * dt
+        self.rect.x += dx * PLAYER_SPEED * delta_time
+        self.rect.y += dy * PLAYER_SPEED * delta_time
 
         self.rect.clamp_ip(screen.get_rect())
 
 class Bullet(pygame.sprite.Sprite):
+    image: pygame.Surface
+    rect: pygame.Rect
+
     def __init__(self, player_x, player_y):
         super().__init__()
 
@@ -57,13 +63,16 @@ class Bullet(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect(center=(player_x, player_y))
 
-    def update(self, dt):
-        self.rect.y -= BULLET_SPEED * dt
+    def update(self, delta_time):
+        self.rect.y -= BULLET_SPEED * delta_time
 
         if self.rect.y < 0:
             self.kill()
 
 class Enemy(pygame.sprite.Sprite):
+    image: pygame.Surface
+    rect: pygame.Rect
+
     def __init__(self, enemy_x, enemy_y):
         super().__init__()
 
@@ -72,14 +81,14 @@ class Enemy(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect(center=(enemy_x, enemy_y))
 
-    def update(self, player_centerx, player_centery, dt):
-        dx = player_centerx - self.rect.centerx
-        dy = player_centery - self.rect.centery
+    def update(self, player_x, player_y, delta_time):
+        dx = player_x - self.rect.centerx
+        dy = player_y - self.rect.centery
         dist = math.hypot(dx, dy)
 
         if dist > 0:
-            self.rect.x += dx / dist * ENEMY_SPEED * dt
-            self.rect.y += dy /dist * ENEMY_SPEED * dt
+            self.rect.x += dx / dist * ENEMY_SPEED * delta_time
+            self.rect.y += dy / dist * ENEMY_SPEED * delta_time
 
 
         if (self.rect.top > HEIGHT or self.rect.bottom < 0 or
@@ -104,7 +113,6 @@ while running:
     for event in pygame.event.get(): # 返回一个元素的类型是pygame.event.Event的list
         if event.type == pygame.QUIT: # pygame.event.Event对象都具有一个type属性，表示事件类型
             running = False
-
 
     dt = clock.tick(FPS) / 1000.0
     keys = pygame.key.get_pressed() # 返回一个类似布尔序列的对象(ScancodeWrapper)，用 pygame.K_* 索引

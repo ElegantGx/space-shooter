@@ -14,3 +14,6 @@ class PlayState(Enum):
     PLAY_PAUSE = auto()
     PLAY_FINISH = auto()
     PLAY_QUIT = auto()
+
+class WindowClosed(Exception):
+    pass

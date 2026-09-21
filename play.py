@@ -2,8 +2,7 @@ import math
 import random
 import pygame
 
-from states import State
-from states import PlayState
+from states import State, PlayState, WindowClosed
 
 WIDTH, HEIGHT = 800, 600
 BG_COLOR = (10, 10, 30)
@@ -143,6 +142,10 @@ def play_loop(play_session):
     spawn_timer = 0.0
 
     while True:
+        for event in pygame.event.get():  # 返回一个元素的类型是pygame.event.Event的list
+            if event.type == pygame.QUIT:  # pygame.event.Event对象都具有一个type属性，表示事件类型
+                raise WindowClosed()
+
         clock.tick(FPS)
         keys = pygame.key.get_pressed()  # 返回一个类似布尔序列的对象(ScancodeWrapper)，用 pygame.K_* 索引
 

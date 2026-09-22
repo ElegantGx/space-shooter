@@ -3,7 +3,7 @@ import pygame
 
 import menu
 import play
-from states import State
+from states import State, WindowClosed
 
 WIDTH, HEIGHT = 800, 600
 
@@ -21,17 +21,23 @@ def main():
         State.PLAY: play.play_main,
     }
 
-    while state != State.QUIT:
-        handler = handlers.get(state, None)
+    try:
+        while state != State.QUIT:
+            handler = handlers.get(state, None)
 
-        if handler is None:
-            # 应该绘制错误窗口
-            break
+            if handler is None:
+                # 应该绘制单独的错误窗口
+                break
 
-        state = handler(screen)
+            state = handler(screen)
 
-    pygame.quit()  # 显式去初始化pygame
-    sys.exit()  # 显式退出
+    except WindowClosed:
+        pass
+
+    finally:
+        pygame.quit()  # 显式去初始化pygame
+        sys.exit()  # 显式退出
+
 
 if __name__ == "__main__":
     main()

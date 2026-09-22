@@ -1,5 +1,4 @@
-from states import State
-from states import MenuState
+from states import State, MenuState, WindowClosed
 
 def menu_main(screen):
 
